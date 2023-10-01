@@ -45,3 +45,8 @@ out/
 build/
 *.iml
 .idea/
+.idea/
+.gradle/
+out/
+build/
+.iml
