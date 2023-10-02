@@ -6,7 +6,6 @@ public class Hero {
     public Hero(Position position) {
         this.position = position;
     }
-
     public void draw(Screen screen) {
         screen.setCharacter(position.getHorizontal(), position.getVertical(), TextCharacter.fromCharacter('X')[0]);
     }
@@ -26,4 +25,9 @@ public class Hero {
     public void setPosition(Position position) {
         this.position = position;
     }
+
+    public Position getPosition() {
+        return position;
+    }
 }
+

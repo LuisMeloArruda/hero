@@ -1,20 +1,25 @@
-import com.googlecode.lanterna.TextCharacter;
 import com.googlecode.lanterna.input.KeyStroke;
 import com.googlecode.lanterna.input.KeyType;
 import com.googlecode.lanterna.screen.Screen;
 import com.googlecode.lanterna.screen.TerminalScreen;
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 import com.googlecode.lanterna.terminal.Terminal;
+import com.googlecode.lanterna.TerminalSize;
+
 
 import java.io.IOException;
 
 
 public class Game {
     Hero hero = new Hero(new Position(10,10));
+    Arena arena = new Arena(50, 20, hero);
     private Screen screen = null;
     Game() {
         try {
-            Terminal terminal = new DefaultTerminalFactory().createTerminal();
+            TerminalSize terminalSize = new TerminalSize(arena.getWidth(), arena.getHeight());
+            DefaultTerminalFactory terminalFactory = new DefaultTerminalFactory().setInitialTerminalSize(terminalSize);
+
+            Terminal terminal = terminalFactory.createTerminal();
 
             screen = new TerminalScreen(terminal);
 
@@ -27,29 +32,10 @@ public class Game {
         }
     }
 
-    private void moveHero(Position position) {
-        hero.setPosition(position);
-    }
-    private void processKey(KeyStroke key) {
-        switch (key.getKeyType()) {
-            case ArrowUp:
-                moveHero(hero.moveUp());
-                break;
-            case ArrowDown:
-                moveHero(hero.moveDown());
-                break;
-            case ArrowRight:
-                moveHero(hero.moveRight());
-                break;
-            case ArrowLeft:
-                moveHero(hero.moveLeft());
-                break;
-        }
-    }
 
     private void draw() throws IOException {
         screen.clear();
-        hero.draw(screen);
+        arena.draw(screen);
         screen.refresh();
     }
     public void run() throws IOException {
@@ -65,7 +51,7 @@ public class Game {
             if (key.getKeyType() == KeyType.EOF) {
                 break;
             }
-            processKey(key);
+            arena.processKey(key);
         }
     }
     public static void main(String[] args) throws IOException {
