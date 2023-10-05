@@ -8,16 +8,16 @@ import com.googlecode.lanterna.TerminalSize;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 
 public class Game {
     Hero hero = new Hero(new Position(10,10));
 
-    List<Wall> walls = new ArrayList<>(Arrays.asList(new Wall(new Position(15, 10)), new Wall(new Position(16, 10))));
+    List<Wall> walls = new ArrayList<>();
+    List<Coin> coins = new ArrayList<>();
 
-    Arena arena = new Arena(50, 20, hero, walls);
+    Arena arena = new Arena(50, 20, hero, walls, coins);
     private Screen screen = null;
 
     Game() {
