@@ -11,15 +11,16 @@ public class Position {
         return horizontal;
     }
 
-    public void setHorizontal(int horizontal) {
-        this.horizontal = horizontal;
-    }
-
     public int getVertical() {
         return vertical;
     }
 
-    public void setVertical(int vertical) {
-        this.vertical = vertical;
+    public boolean equals(Object o) {
+
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Position position = (Position) o;
+        return horizontal == position.horizontal && vertical == position.vertical;
     }
 }

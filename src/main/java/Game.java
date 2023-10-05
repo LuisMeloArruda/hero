@@ -6,36 +6,41 @@ import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 import com.googlecode.lanterna.terminal.Terminal;
 import com.googlecode.lanterna.TerminalSize;
 
-
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 
 public class Game {
     Hero hero = new Hero(new Position(10,10));
-    Arena arena = new Arena(50, 20, hero);
+
+    List<Wall> walls = new ArrayList<>(Arrays.asList(new Wall(new Position(15, 10)), new Wall(new Position(16, 10))));
+
+    Arena arena = new Arena(50, 20, hero, walls);
     private Screen screen = null;
+
     Game() {
         try {
             TerminalSize terminalSize = new TerminalSize(arena.getWidth(), arena.getHeight());
             DefaultTerminalFactory terminalFactory = new DefaultTerminalFactory().setInitialTerminalSize(terminalSize);
-
             Terminal terminal = terminalFactory.createTerminal();
 
             screen = new TerminalScreen(terminal);
-
             screen.setCursorPosition(null);
             screen.startScreen();
             screen.doResizeIfNecessary();
+            screen.refresh();
 
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-
     private void draw() throws IOException {
         screen.clear();
-        arena.draw(screen);
+        arena.draw(screen.newTextGraphics());
+        hero.draw(screen.newTextGraphics());
         screen.refresh();
     }
     public void run() throws IOException {
