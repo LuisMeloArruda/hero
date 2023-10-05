@@ -1,3 +1,4 @@
+import Elemento.*;
 import com.googlecode.lanterna.input.KeyStroke;
 import com.googlecode.lanterna.input.KeyType;
 import com.googlecode.lanterna.screen.Screen;
@@ -17,7 +18,9 @@ public class Game {
     List<Wall> walls = new ArrayList<>();
     List<Coin> coins = new ArrayList<>();
 
-    Arena arena = new Arena(50, 20, hero, walls, coins);
+    List<Monster> monsters = new ArrayList<>();
+
+    Arena arena = new Arena(50, 20, hero, walls, coins, monsters);
     private Screen screen = null;
 
     Game() {
@@ -47,6 +50,7 @@ public class Game {
         while (true) {
             draw();
             KeyStroke key = screen.readInput();
+            arena.moveMonsters();
             if (key.getCharacter() != null) {
                 if (key.getCharacter() == 'q') {
                     screen.close();

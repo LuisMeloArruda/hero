@@ -1,3 +1,7 @@
+import Elemento.Coin;
+import Elemento.Hero;
+import Elemento.Monster;
+import Elemento.Wall;
 import com.googlecode.lanterna.TerminalPosition;
 import com.googlecode.lanterna.TerminalSize;
 import com.googlecode.lanterna.TextColor;
@@ -8,19 +12,23 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
+import Elemento.*;
+
 public class Arena {
     private final int width;
     private final int height;
     private Hero hero;
     private List<Wall> walls;
     private List<Coin> coins;
+    private List<Monster> monsters;
 
-    public Arena(int width, int height, Hero hero, List<Wall> walls, List<Coin> coins) {
+    public Arena(int width, int height, Hero hero, List<Wall> walls, List<Coin> coins, List<Monster> monsters) {
         this.width = width;
         this.height = height;
         this.hero = hero;
         this.walls = createWalls();
         this.coins = createCoins();
+        this.monsters = createMonsters();
     }
 
     private List<Wall> createWalls() {
@@ -44,6 +52,14 @@ public class Arena {
         return coins;
     }
 
+    private List<Monster> createMonsters() {
+        Random random = new Random();
+        ArrayList<Monster> monsters = new ArrayList<>();
+        for (int i = 0; i < 20; i++)
+            monsters.add(new Monster(new Position(random.nextInt(width - 2) + 1, random.nextInt(height - 2) + 1)));
+        return monsters;
+    }
+
     public int getWidth() {
         return width;
     }
@@ -61,9 +77,12 @@ public class Arena {
 
         for (Coin coin : coins)
             coin.draw(graphics);
+
+        for (Monster monster : monsters)
+            monster.draw(graphics);
     }
 
-    private Boolean canHeroMove(Position position) {
+    private Boolean canHeroOrMonsterMove(Position position) {
         for (Wall wall : walls) {
             if (position.equals(wall.getPosition())) {
                 return false;
@@ -73,11 +92,32 @@ public class Arena {
     }
 
     private void moveHero(Position position) {
-        if (canHeroMove(position)) {
+        if (canHeroOrMonsterMove(position)) {
             retrieveCoins(position);
             hero.setPosition(position);
+            verifyMonsterCollisions(position);
         }
     }
+
+    public void verifyMonsterCollisions(Position position) {
+        for (Monster monster : monsters) {
+            if (monster.getPosition().equals(position)) {
+                System.out.println("GAME OVER");
+                System.exit(0);
+            }
+        }
+    }
+
+    public void moveMonsters() {
+        Position position;
+        for (Monster monster : monsters) {
+            position = monster.move();
+            if (canHeroOrMonsterMove(position)) {
+                monster.setPosition(position);
+            }
+        }
+    }
+
     void processKey(KeyStroke key) {
         switch (key.getKeyType()) {
             case ArrowUp:
