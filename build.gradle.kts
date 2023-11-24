@@ -20,9 +20,9 @@ tasks.test {
     useJUnitPlatform()
 }
 
-application {
-    mainClass.set("Application")
-}
+    application {
+        mainClass.set("Application")
+    }
 
 
 

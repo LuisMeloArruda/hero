@@ -1,5 +1,3 @@
-package Elemento;
-
 public class Position {
     private int horizontal;
     private int vertical;

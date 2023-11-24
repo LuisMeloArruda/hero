@@ -8,10 +8,13 @@ import com.googlecode.lanterna.terminal.Terminal;
 
 import java.io.IOException;
 
-import Elemento.*;
 
 public class Application {
     public static void main(String[] args) throws IOException {
+        Game game = new Game();
+        game.run();
+
+        /*
         Screen screen = null;
         try {
 
@@ -27,15 +30,16 @@ public class Application {
             e.printStackTrace();
         }
 
-        /*
+
         TerminalSize terminalSize = new TerminalSize(40, 20);
         DefaultTerminalFactory terminalFactory = new DefaultTerminalFactory().setInitialTerminalSize(terminalSize);
         terminalFactory.createTerminal();
-        */
+
 
         assert screen != null;
         screen.clear();
         screen.setCharacter(10, 10, TextCharacter.fromCharacter('X')[0]);
         screen.refresh();
+        */
     }
 }

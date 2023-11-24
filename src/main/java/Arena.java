@@ -1,7 +1,3 @@
-import Elemento.Coin;
-import Elemento.Hero;
-import Elemento.Monster;
-import Elemento.Wall;
 import com.googlecode.lanterna.TerminalPosition;
 import com.googlecode.lanterna.TerminalSize;
 import com.googlecode.lanterna.TextColor;
@@ -11,8 +7,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
-
-import Elemento.*;
 
 public class Arena {
     private final int width;
